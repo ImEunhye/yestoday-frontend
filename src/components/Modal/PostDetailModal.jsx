@@ -47,7 +47,7 @@ const PostDetailModal = props => {
 
 
     const addLike = async () => {
-        const response = await axios.post("http://localhost:8080/likes", {
+        const response = await axios.post("http://54.248.66.164:8080/likes", {
             "postId": props.post.id,
             "userId": userId
         })
@@ -57,7 +57,7 @@ const PostDetailModal = props => {
     }
 
     const deleteLike = async () => {
-        const response = await axios.delete("http://localhost:8080/likes/" + props.likeId);
+        const response = await axios.delete("http://54.248.66.164:8080/likes/" + props.likeId);
 
         props.setLike(false);
         props.setLikeId(0);
@@ -73,7 +73,7 @@ const PostDetailModal = props => {
 
     useEffect(() => {
         const getComments = async () => {
-            const response = await axios.get("http://localhost:8080/comments/posts/" + props.post.id);
+            const response = await axios.get("http://54.248.66.164:8080/comments/posts/" + props.post.id);
 
             setComments(response.data);
 
@@ -93,7 +93,7 @@ const PostDetailModal = props => {
     const deleteCommentHandler = (comment) => {
         console.log(comment);
         if (window.confirm('댓글을 삭제하시겠습니까?')) {
-            axios.delete('http://localhost:8080/comments/' + comment.id);
+            axios.delete('http://54.248.66.164:8080/comments/' + comment.id);
             alert('댓글이 삭제되었습니다.')
             setRefresh(refresh => refresh * -1)
         }
@@ -102,7 +102,7 @@ const PostDetailModal = props => {
 
     const commentsList = comments.map((comment) => (
         <li className='flex justify-between mb-4 h-fit ' key={comment.id} >
-            <div className='flex w-16 mr-2'>
+            <div className='flex mr-2 w-17 h-17'>
                 <img className='object-cover w-6 h-6 mr-1 rounded-full' src={comment.user.imageUrl}></img>
                 <span className='mt-1 text-xs font-semibold'>{comment.user.nickname}</span>
             </div>
@@ -115,7 +115,7 @@ const PostDetailModal = props => {
 
 
     const saveComment = async () => {
-        await axios.post('http://localhost:8080/comments', {
+        await axios.post('http://54.248.66.164:8080/comments', {
             postId: props.post.id,
             userId: 1,
             commentDesc: commentText,
@@ -138,8 +138,8 @@ const PostDetailModal = props => {
     }
 
     const deleteFeed = async () => {
-        await axios.delete('http://localhost:8080/posts/' + props.post.id);
-        await axios.put('http://localhost:8080/api/todo/id/' + props.post.todoId + '/post', null, {
+        await axios.delete('http://54.248.66.164:8080/posts/' + props.post.id);
+        await axios.put('http://54.248.66.164:8080/api/todo/id/' + props.post.todoId + '/post', null, {
             params: { isPosted: false }
         });
 
@@ -176,8 +176,11 @@ const PostDetailModal = props => {
             <div className='w-3/5 p-1 m-1 border-r-2'>
                 <div className='flex justify-between h-12 m-2'>
                     <div className='flex w-fit' onClick={() => setIsClicked(true)}>
-                        <img className='object-cover h-12 rounded-full -12' src={props.user.imageUrl}></img>
-                        <span className='mt-2 ml-1'>{props.user.nickname}</span>
+                        <img className='object-cover w-10 h-10 rounded-full' src={props.user.imageUrl}></img>
+                        <div>
+                            <span className='mt-2 ml-3 font-semibold text-left'>{props.user.nickname}</span>
+                            <div className='ml-3 text-xs text-left text-slate-400'>{props.post.postDateTime.substr(0, 10)}</div>
+                        </div>
                     </div>
                     {isClicked && <ProfileTodoModal setIsClicked={setIsClicked} post={props.post} user={props.user} />}
 
@@ -198,9 +201,9 @@ const PostDetailModal = props => {
                     </Modal>
 
                 </div>
-                <div className='relative flex justify-center overflow-hidden transition-all duration-500 group'>
+                <div className='relative flex justify-center px-2 overflow-hidden transition-all duration-500 group'>
 
-                    <img className='h-[500px] w-full object-scale-down transition-all duration-500 '
+                    <img className='h-[500px] w-full object-scale-down transition-all duration-500 bg-black'
                         src={props.post.imageUrl} alt=""
                     />
                     <div className='absolute flex p-4 transition-all duration-500 bg-white rounded shadow-md opacity-70 -bottom-52 group-hover:bottom-7 right-2 left-2 dark:bg-slate-900 dark:shadow-gray-700'>
@@ -211,7 +214,7 @@ const PostDetailModal = props => {
 
                 </div>
 
-                <div className='mt-5 text-xs text-left text-slate-400'>{props.post.postDateTime.substr(0, 10)}</div>
+                {/* <div className='mt-3 ml-2 text-xs text-left text-slate-400'>{props.post.postDateTime.substr(0, 10)}</div> */}
 
             </div>
 

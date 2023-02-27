@@ -20,6 +20,7 @@ const GoogleLog = ({ onSocial }) => {
 
     const onSuccess = (response) => {
         console.log(response);
+        window.location.replace('/')
     
     };
     const onFailure = (response) => {

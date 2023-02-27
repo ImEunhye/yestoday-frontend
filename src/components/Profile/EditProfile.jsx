@@ -28,6 +28,8 @@ const EditProfile = () => {
   const user = state.state;
   const [imgUrl, setImgUrl] = useState(user.imageUrl);
 
+  console.log(user.id + "props.user입니다");
+
   const [profile, setProfile] = useState({
     id: user.id,
     nickname: user.nickname,

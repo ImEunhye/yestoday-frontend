@@ -8,7 +8,7 @@ import axios from 'axios';
 
 
 
-const baseUrl = 'http://localhost:8080/api/todo'
+const baseUrl = 'http://54.248.66.164:8080/api/todo'
 
 
 

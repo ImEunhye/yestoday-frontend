@@ -3,6 +3,7 @@ import Posts from './Post/Posts';
 import axios from 'axios';
 import { useState, useEffect, useRef, useCallback } from "react";
 import { logDOM } from '@testing-library/react';
+import jwt_decode from 'jwt-decode';
 
 
 
@@ -18,7 +19,8 @@ const MainFeed = props => {
     let endRef = useRef(false); //모든 글 로드 확인
 
 
-    const userId = 1;
+    const token = localStorage.getItem('accessToken')
+    const userId = jwt_decode(token).sub
 
     useEffect(() => { //옵저버 생성
 
@@ -45,7 +47,7 @@ const MainFeed = props => {
     const getPosts = useCallback(async () => { //글 불러오기  
         setLoad(true); //로딩 시작
         try {
-            const res = await axios({ method: 'GET', url: `http://localhost:8080/posts/feed/user/${userId}?page=${page}` });
+            const res = await axios({ method: 'GET', url: `http://54.248.66.164:8080/posts/feed/user/${userId}?page=${page}` });
             console.log(res.data);
             setFeed(prev => [...prev, ...res.data.content]); //리스트 추가
             if (res.data.last) { //마지막 페이지일 경우
@@ -72,8 +74,8 @@ const MainFeed = props => {
 
         <div>
 
-            <button className='fixed items-center float-right font-semibold bottom-7 right-[480px] hover:cursor-pointer ' >
-                <img className='w-16 h-16 ' src='https://yestoday.s3.ap-northeast-2.amazonaws.com/plus3.png' alt=""
+            <button className='fixed items-center float-right font-semibold bottom-7 right-[500px] hover:cursor-pointer ' >
+                <img className='w-[80px] h-[80px] ' src='https://yestoday.s3.ap-northeast-2.amazonaws.com/plus2.png' alt=""
                     onClick={showModal} /></button>
             <Posts feed={feed} />
             {

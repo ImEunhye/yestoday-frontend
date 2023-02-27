@@ -13,7 +13,7 @@ const MyProfile = () => {
     const [postInfo, setPostInfo] = useState([]);
     const [numberOfFollower, setNumberOfFollower] = useState([]);
 
-    const baseUrl = 'http://localhost:8080';
+    const baseUrl = 'http://54.248.66.164:8080';
 
     const testApiCall = async () => {
 

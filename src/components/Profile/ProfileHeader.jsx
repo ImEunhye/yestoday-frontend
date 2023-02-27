@@ -4,12 +4,16 @@ import { useState, useEffect } from 'react'
 import FollowerModal from '../Modal/FollowerModal'
 import FollowingModal from '../Modal/FollowingModal'
 import axios from 'axios'
+import jwt_decode from 'jwt-decode';
 
 const ProfileHeader = props => {
     const imgSrc = props.user.imageUrl
     const [isFollowingCheck, setIsFollowingCheck] = useState(false);
     const [isFollowerCheck, setIsFollowerCheck] = useState(false);
     const [isFollowed, setisFollowed] = useState(false);
+
+    const token = localStorage.getItem('accessToken')
+    const myUserId = jwt_decode(token).sub
 
     console.log(isFollowed);
     console.log(props.user.id);
@@ -25,7 +29,7 @@ const ProfileHeader = props => {
 
     const sendFollowGetRequest = async (userId, followUserId) => {
         await axios.post(
-            'http://localhost:8080/follows',
+            'http://54.248.66.164:8080/follows',
             {
                 "user": {
                     "id": userId //Todo 로그인 유저 정보로 업데이트
@@ -42,7 +46,7 @@ const ProfileHeader = props => {
     const sendFollowDeleteRequest = async (userId, followUserId) => {
         if (window.confirm(`${props.user.nickname}님을 팔로우 취소하시겠습니까?`)) {
             await axios.delete(
-                `http://localhost:8080/follows/${userId}/${followUserId}`)
+                `http://54.248.66.164:8080/follows/${userId}/${followUserId}`)
             setisFollowed(!isFollowed)
             window.location.reload()
         }
@@ -51,7 +55,7 @@ const ProfileHeader = props => {
     const checkFollowState = async (userId, followUserId) => {
         console.log("호출됨");
         const response = await axios.get(
-            `http://localhost:8080/follows/following-check/${userId}/${followUserId}`)
+            `http://54.248.66.164:8080/follows/following-check/${userId}/${followUserId}`)
         console.log(response.data + "아아아아아아아아아아");
         setisFollowed(response.data)
     }
@@ -59,11 +63,11 @@ const ProfileHeader = props => {
     useEffect(() => {
         console.log('usee');
         console.log(props.user.id);
-        checkFollowState(1, props.user.id);
+        checkFollowState(myUserId, props.user.id);
     }, [props])
 
     const followButtonController = () => {
-        isFollowed ? sendFollowDeleteRequest(1, props.user.id) : sendFollowGetRequest(1, props.user.id);
+        isFollowed ? sendFollowDeleteRequest(myUserId, props.user.id) : sendFollowGetRequest(myUserId, props.user.id);
     }
 
     console.log(isFollowed + 'asdgasdgsdgdgas');

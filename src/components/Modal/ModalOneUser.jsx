@@ -11,7 +11,7 @@ const ModalOneUser = props => {
 
   useEffect(() => {
     axios.get(
-      `http://localhost:8080/follows/following-check/${props.user.id}/${props.id}`)
+      `http://54.248.66.164:8080/follows/following-check/${props.user.id}/${props.id}`)
       .then(response => response.data)
       .then(data => setFollowed(data))
 

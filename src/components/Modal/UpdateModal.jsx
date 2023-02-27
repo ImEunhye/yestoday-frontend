@@ -6,7 +6,7 @@ import AWS from 'aws-sdk';
 import Modal from 'react-modal'
 
 
-const baseUrl = 'http://localhost:8080/posts'
+const baseUrl = 'http://54.248.66.164:8080/posts'
 const region = "ap-northeast-2";
 const bucket = 'yestoday';
 let imgName = '';

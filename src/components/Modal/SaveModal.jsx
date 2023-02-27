@@ -4,6 +4,8 @@ import axios from 'axios';
 import AWS from 'aws-sdk';
 import Modal from 'react-modal';
 import { v4 as uuidv4 } from 'uuid';
+import jwt_decode from 'jwt-decode';
+
 
 
 
@@ -28,7 +30,8 @@ const SaveModal = props => {
     const [imgType, setImgType] = useState('');
     const [description, setDescription] = useState('');
     const [todos, setTodos] = useState([]);
-    const userId = 1;
+    const token = localStorage.getItem('accessToken')
+    const userId = jwt_decode(token).sub
 
 
     const dateFormat = (date) => {
@@ -40,7 +43,7 @@ const SaveModal = props => {
 
     useEffect(() => {
         const getTodos = async () => {
-            const response = await axios.get('http://localhost:8080/api/todo/users/' + userId + '/not-posted-todos/todo-date/' + dateFormat(new Date()));
+            const response = await axios.get('http://54.248.66.164:8080/api/todo/users/' + userId + '/not-posted-todos/todo-date/' + dateFormat(new Date()));
             setTodos(response.data);
         }
         getTodos();
@@ -53,13 +56,13 @@ const SaveModal = props => {
 
     //todo 갱신
     const setTodoIsPosted = async () => {
-        const response = await axios.get('http://localhost:8080/api/todo/id/' + todoId);
+        const response = await axios.get('http://54.248.66.164:8080/api/todo/id/' + todoId);
         if (!response.data.completeState) {
-            await axios.put('http://localhost:8080/api/todo/id/' + todoId + '/post?isPosted=true');
+            await axios.put('http://54.248.66.164:8080/api/todo/id/' + todoId + '/post?isPosted=true');
         }
 
 
-        const aa = await axios.put('http://localhost:8080/api/todo/todocomplete', null,
+        const aa = await axios.put('http://54.248.66.164:8080/api/todo/todocomplete', null,
             { params: { id: todoId } });
         console.log(aa);
     }

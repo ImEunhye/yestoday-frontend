@@ -38,7 +38,7 @@ const UsersSearchPage = props => {
 
     const getSearchResult = async () => {
         console.log(searchKeyword);
-        const result = await axios.get('http://localhost:8080/users-search/nickname/' + searchKeyword);
+        const result = await axios.get('http://54.248.66.164:8080/users-search/nickname/' + searchKeyword);
         setResult(result.data)
         console.log(result.data);
 

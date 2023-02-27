@@ -16,15 +16,15 @@ const Todo = props => {
     }, [])
 
     const updateTodoPosted = async () => {
-        const response = await axios.put('http://localhost:8080/api/todo/id/' + props.id + '/post?isPosted=false');
+        const response = await axios.put('http://54.248.66.164:8080/api/todo/id/' + props.id + '/post?isPosted=false');
 
         console.log('isPosted false', response.data);
 
     }
     const deletePost = async () => {
-        const response = await axios.get('http://localhost:8080/posts/todo/' + props.id);
+        const response = await axios.get('http://54.248.66.164:8080/posts/todo/' + props.id);
         console.log(response.data);
-        await axios.delete('http://localhost:8080/posts/' + response.data.id);
+        await axios.delete('http://54.248.66.164:8080/posts/' + response.data.id);
 
     }
 
@@ -92,8 +92,8 @@ const Todo = props => {
 
     return (
         <li>
-            <div className="flex items-center w-full group">
-                <input type="checkbox" className='h-6 w-7' onChange={checkHandler} checked={isCompleted} />
+            <div className="flex items-center w-full mb-3 group">
+                <input type="checkbox" className='h-6 mr-3 w-7' onChange={checkHandler} checked={isCompleted} />
                 <div className='w-full' onDoubleClick={editableHandler}>
 
                     <input className={`p-1 h-full w-full bg-transparent ${isCompleted && 'line-through text-gray-300 ease-in duration-500'}`} // list
@@ -108,7 +108,7 @@ const Todo = props => {
                 </div>
 
                 <ModalTodo todo={title} id={props.id} todoDescription={props.todoDescription} updateSubmitHandler={updateSubmitHandler} />
-                <img className='w-5 h-5 transition duration-300 ease-in-out delay-100 cursor-pointer hover:-translate-y-1 hover:scale-110' src="https://yestoday.s3.ap-northeast-2.amazonaws.com/trash.png" alt="" onClick={deleteTodoHandler}/>
+                <img className='w-5 h-5 transition duration-300 ease-in-out delay-100 cursor-pointer hover:-translate-y-1 hover:scale-110' src="https://yestoday.s3.ap-northeast-2.amazonaws.com/trash.png" alt="" onClick={deleteTodoHandler} />
                 {/* <img className='w-5 h-5 mr-4 transition duration-300 ease-in-out delay-100 cursor-pointer hover:-translate-y-1 hover:scale-110' src="images/pencil.png" alt="" onClick={handleShow}/> */}
 
             </div>

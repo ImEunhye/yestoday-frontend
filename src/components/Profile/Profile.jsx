@@ -9,8 +9,9 @@ import { useLocation, useParams } from 'react-router-dom';
 import SideBar from '../SideBar';
 import SaveModal from '../Modal/SaveModal';
 import MyProfileHeader from './MyprofileHeader';
+import jwt_decode from 'jwt-decode';
 
-const baseUrl = 'http://localhost:8080';
+const baseUrl = 'http://54.248.66.164:8080';
 
 const Profile = props => {
     const params = useParams();
@@ -20,6 +21,9 @@ const Profile = props => {
     const [postInfo, setPostInfo] = useState([]);
     const userName = params.username;
     console.log(userName);
+
+    const token = localStorage.getItem('accessToken')
+    const myUserId = jwt_decode(token).sub
 
     const testApiCall = async () => {
         try {
@@ -45,7 +49,7 @@ const Profile = props => {
 
     useEffect(() => {
         testApiCall();
-    }, [])
+    }, [props])
 
     console.log(JSON.stringify(user) + 'userId입니다');
 
@@ -58,7 +62,7 @@ const Profile = props => {
                 <SideBar setSaveIsOpen={setSaveIsOpen}></SideBar>
             </div>
             <div className='md:w-2/3 lg:w-3/4 xl:w-5/6'>
-                {user.id === 1 ? <MyProfileHeader user={user} followingInfo={followingInfo} postInfo={postInfo} followerInfo={followerInfo} /> : <ProfileHeader user={user} followingInfo={followingInfo} postInfo={postInfo} followerInfo={followerInfo} />}
+                {user.id === parseInt(myUserId) ? <MyProfileHeader user={user} followingInfo={followingInfo} postInfo={postInfo} followerInfo={followerInfo} /> : <ProfileHeader user={user} followingInfo={followingInfo} postInfo={postInfo} followerInfo={followerInfo} />}
                 {/* <ProfileHeader user={user} followingInfo={followingInfo} postInfo={postInfo} followerInfo={followerInfo} /> */}
                 <ProfileBodyTemp user={user} postInfo={postInfo} />
                 {/* <ProfileBody feeds={feeds} /> */}

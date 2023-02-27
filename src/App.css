@@ -2,3 +2,21 @@
   font-family: "NanumGothic";
   src: url("./fonts/NanumGothic-Regular.ttf");
 }
+
+.caps-lock {
+  display: inline-block;
+  vertical-align: baseline;
+  width: 100px;
+  padding: 5px 8px;
+  font-size: 12px;
+  font-weight: 800;
+  margin-left: 5px;
+  color: white;
+  border-radius: 0.5rem;
+  background-color: rgb(215, 13, 139);
+  text-align: right;
+}
+
+.caps-lock-on {
+  background-color: rgb(105, 224, 232);
+}

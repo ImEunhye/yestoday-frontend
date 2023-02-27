@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal'
 import styled from 'styled-components';
+import jwt_decode from 'jwt-decode';
 
 const ScrollTodo = styled.ul`
 overflow:auto;
@@ -20,10 +21,12 @@ height:370px;
 
 const CalendarTodoModal = props => {
     const [todos, setTodos] = useState([]);
+    const token = localStorage.getItem('accessToken')
+    const myUserId = jwt_decode(token).sub
 
     useEffect(() => {
         const getTodos = async () => {
-            const response = await axios.get('http://localhost:8080/api/todo/users/' + props.userId + "/todo-date/" + props.date);
+            const response = await axios.get('http://54.248.66.164:8080/api/todo/users/' + myUserId + "/todo-date/" + props.date);
             setTodos(response.data)
             console.log(response.data);
         }
